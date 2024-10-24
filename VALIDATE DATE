@@ -1,0 +1,8 @@
+def validateDate(date_entered): #this def validates that the date entered is a correct date and in the right format
+    try:
+        datetime.datetime.strptime(date_entered, '%d/%m/%Y')
+        print("date format all good")
+        return True
+    except ValueError:
+        print("INVALID date: Incorrect date format, should be DD/MM/YYYY")
+        return False
