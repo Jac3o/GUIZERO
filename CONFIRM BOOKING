@@ -1,0 +1,44 @@
+def confirm_booking():
+	if cardnumber_tb.value =="":
+		info("Info","Please enter a card number")
+	elif len(cardnumber_tb.value)!=16:
+		info("Info","Please enter a card number with 16 digits")
+	elif account_number_tb.value =="":
+		info("Info","Please enter an account number")
+	elif len(account_number_tb.value)!=8:
+		info("Info","Please enter an account number with 8 characters ")   #checking that the password has minimum 8 characters
+
+	elif security_code_tb.value == "":
+		info("Info","Please enter a security code")
+	elif len(security_code_tb.value)!=3:
+		info("Info","Please enter a security number with 3 characters ")
+	elif Card_holdersname_tb.value =="":
+		info("Info","Please enter a name")
+	elif Expiry_date_tb.value == "":
+		info("Info","Please enter a date")
+	elif creditcard_date(Expiry_date_tb.value) == 0:
+		info("Info","Please enter a valid credit card expiry date in format MM/YY")
+	
+	else:
+		global UserID_LoggedIn ## variable needed to know who logged in ##
+		if airline.value == "British Airways":
+			airlineprefix = "BA"
+		else:
+			airlineprefix = "EA"
+#
+		
+		# get random flight number
+		get_randomnum = generate_flight()
+		# using format
+		#num_with_zeros = '{:03}'.format(num)
+		# using string's zfill
+		#num_with_zeros = str(num).zfill(3)
+
+		flight_num = airlineprefix + get_randomnum
+		print (flight_num)
+		# Create booking
+		sqlinsert = "INSERT INTO booking (BK_Cardholders_name, BK_Card_number, BK_Expiry_date, BK_Security_code, BK_departure_date, BK_flight_number, BK_departing_airport, BK_Destination, BK_return_date, UserID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+		
+		execute_sql(database_file, sqlinsert, (Card_holdersname_tb.value, cardnumber_tb.value, Expiry_date_tb.value, security_code_tb.value, date_of_departure_dashboard.value, flight_num, departing_airport.value, destination_airport.value, date_of_return_dashboard.value, UserID_LoggedIn ))
+		
+		info("info", "Booking paid and confimed")
