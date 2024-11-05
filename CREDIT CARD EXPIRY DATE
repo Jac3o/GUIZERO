@@ -1,0 +1,16 @@
+def creditcard_date(date_str): # blah
+	# blah
+	# https://stackoverflow.com/questions/78408226/how-to-parse-credit-card-expiration-date-format-correctly-using-parser
+	#
+	from datetime import datetime
+	month, year = date_str.split("/")
+	month = int(month)
+	year = int(year)
+	year = 2000 + year
+	if year >= datetime.now().year: # year is greater than this year
+		#return datetime(year, month, 1)
+		return 1
+	elif  year == datetime.now().year and month >= datetime.now().month: # year is equal and month ahead
+		return 1
+	else:
+		return 0
